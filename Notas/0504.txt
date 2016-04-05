@@ -1,0 +1,8 @@
+Árvore de atributos
+
+Atributos de herança -> atributos irmãos
+Atributos sintetizados -> pai sintetiza filhos
+
+A definição de atributos é interessante pois de acordo com a árvore
+de derivação dos atributos, necessitamos trabalhar com atributos
+herdados ou sintetizados, muitas vezes os dois.
