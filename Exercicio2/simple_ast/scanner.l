@@ -2,20 +2,22 @@
 #include <string>
 #include "ast.h"
 #include "parser.h"
+#include "string.h"
 extern int yylineno;
 void yyerror(const char* s, ...);
 %}
 
 %option noyywrap nodefault yylineno
 
-digs [0-9]+
-def  "def "[a-z]+(","[a-z])+
+_digs [0-9]+
+_var  [a-z]+
 
 %%
 
 [ \t]               ; //ignores spaces
-{def}               {yylval}
-{digs}              {yylval.integer = std::atoi(yytext); return T_INT;}
+"def"               {return T_DEF;}
+{_var}              {yylval.string = yytext; return T_VAR;}
+{_digs}             {yylval.integer = std::atoi(yytext); return T_INT;}
 "+"                 {return T_PLUS;}
 "*"                 {return T_MULT;}
 \n                  {return T_NL;}

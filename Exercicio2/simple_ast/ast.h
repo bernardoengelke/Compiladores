@@ -27,6 +27,14 @@ class Integer : public Node {
         int computeTree();
 };
 
+class Variavel : public Node {
+    public:
+        std::string name;
+        Variavel(std::string name) : name(name) {  }
+        void printTree();
+        int computeTree();
+};
+
 class BinOp : public Node {
     public:
         Operation op;
