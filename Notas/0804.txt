@@ -1,0 +1,11 @@
+Continuação aula do dia 05/04
+
+Definição de variável -> "def" {var ","}* var
+
+passos:
+1-> Soma dois inteiros
+2-> multiplicação
+2.1->debug
+2.2->definição de variável
+2.3->uso de variável em expressão (definir valor 0 para variável)
+3->atribuição
