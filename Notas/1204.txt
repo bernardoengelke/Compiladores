@@ -1,0 +1,10 @@
+V0.4 Definição de tipos
+
+	(def a) não existe mais
+
+Passa para int a | double a  ...
+			
+	b = 10.2
+	a = 0
+			
+Caso operação entre tipos diferentes, não deixa acontecer.

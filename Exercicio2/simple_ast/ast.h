@@ -6,7 +6,7 @@
 namespace AST {
 
 //Binary operations
-enum Operation { plus, mult };
+enum Operation { plus, mult, assign};
 
 class Node;
 
@@ -30,7 +30,8 @@ class Integer : public Node {
 class Variavel : public Node {
     public:
         std::string name;
-        Variavel(std::string name) : name(name) {  }
+        Node *next;
+        Variavel(std::string name, Node *node) : name(name), next(node){  }
         void printTree();
         int computeTree();
 };

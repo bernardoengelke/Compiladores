@@ -50,7 +50,9 @@ extern int yydebug;
     T_PLUS = 260,
     T_NL = 261,
     T_MULT = 262,
-    T_DEF = 263
+    T_DEF = 263,
+    T_SEPARATOR = 264,
+    T_ASSIGN = 265
   };
 #endif
 
@@ -59,15 +61,15 @@ extern int yydebug;
 typedef union YYSTYPE YYSTYPE;
 union YYSTYPE
 {
-#line 12 "parser.y" /* yacc.c:1909  */
+#line 14 "parser.y" /* yacc.c:1909  */
 
     int integer;
-    char * string;
+    const char * string;
 
     AST::Node *node;
     AST::Block *block;
 
-#line 71 "parser.h" /* yacc.c:1909  */
+#line 73 "parser.h" /* yacc.c:1909  */
 };
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1

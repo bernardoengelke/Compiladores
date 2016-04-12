@@ -1,6 +1,9 @@
 #include "ast.h"
+#include "st.h"
 
 using namespace AST;
+
+extern ST::SymbolTable symtab;
 
 /* Print methods */
 void Integer::printTree(){
@@ -18,6 +21,7 @@ void BinOp::printTree(){
     switch(op){
         case plus: std::cout << " + "; break;
         case mult: std::cout << " * "; break;
+        case assign: std::cout << " = "; break;
     }
     right->printTree();
     return;
@@ -36,7 +40,7 @@ int Integer::computeTree(){
 }
 
 int Variavel::computeTree(){
-  return 0;
+  return symtab.entryList[name].value;
 }
 
 int BinOp::computeTree(){
@@ -46,6 +50,10 @@ int BinOp::computeTree(){
     switch(op){
          case plus: value = lvalue + rvalue; break;
          case mult: value = lvalue * rvalue; break;
+         case assign:
+            Variavel* leftvar = dynamic_cast<Variavel*>(left);
+            symtab.entryList[leftvar->name].value = rvalue;
+            value = rvalue; break;
     }
     return value;
 }
