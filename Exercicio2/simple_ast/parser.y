@@ -7,6 +7,7 @@ extern int yylex();
 extern void yyerror(const char* s, ...);
 %}
 
+%define parse.trace
 /* yylval == %union
  * union informs the different ways we can store data
  */
@@ -24,7 +25,7 @@ extern void yyerror(const char* s, ...);
 %token <integer> T_INT
 %token <string> T_VAR
 %token T_PLUS T_NL T_MULT
-%token T_DEF T_SEPARATOR T_ASSIGN
+%token D_DOUBLE D_INT T_SEPARATOR T_ASSIGN
 
 /* type defines the type of our nonterminal symbols.
  * Types should match the names used in the union.
@@ -56,7 +57,8 @@ lines   : line { $$ = new AST::Block(); $$->lines.push_back($1); std::cout << "N
 
 line    : T_NL { $$ = NULL; std::cout << "Nothing to be used" << std::endl;} /*nothing here to be used */
         | expr T_NL /*$$ = $1 when nothing is said*/
-        | T_DEF variaveis T_NL {$$ = $2; std::cout << "Definitions founded" << std::endl;}
+        | D_INT variaveis T_NL {$$ = symtab.updateTypeVariable($2); std::cout << "Definitions founded" << std::endl;}
+        | D_DOUBLE variaveis T_NL {$$ = symtab.updateTypeVariable($2); std::cout << "Definitions founded" << std::endl;}
         | T_VAR T_ASSIGN expr { AST::Node* node = symtab.assignVariable($1);
                                 $$ = new AST::BinOp(node,AST::assign, $3);}
         ;

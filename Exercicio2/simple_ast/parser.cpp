@@ -95,7 +95,7 @@ extern void yyerror(const char* s, ...);
 # define YY_YY_PARSER_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
-# define YYDEBUG 0
+# define YYDEBUG 1
 #endif
 #if YYDEBUG
 extern int yydebug;
@@ -122,7 +122,7 @@ extern int yydebug;
 typedef union YYSTYPE YYSTYPE;
 union YYSTYPE
 {
-#line 14 "parser.y" /* yacc.c:355  */
+#line 15 "parser.y" /* yacc.c:355  */
 
     int integer;
     const char * string;
@@ -443,8 +443,8 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    49,    49,    53,    54,    57,    58,    59,    60,    64,
-      65,    68,    69,    70,    71,    72
+       0,    50,    50,    54,    55,    58,    59,    60,    61,    65,
+      66,    69,    70,    71,    72,    73
 };
 #endif
 
@@ -1228,80 +1228,80 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 49 "parser.y" /* yacc.c:1646  */
+#line 50 "parser.y" /* yacc.c:1646  */
     { programRoot = (yyvsp[0].block); std::cout << "End of entries" << std::endl;}
 #line 1234 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 3:
-#line 53 "parser.y" /* yacc.c:1646  */
+#line 54 "parser.y" /* yacc.c:1646  */
     { (yyval.block) = new AST::Block(); (yyval.block)->lines.push_back((yyvsp[0].node)); std::cout << "New line was founded" << std::endl;}
 #line 1240 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 4:
-#line 54 "parser.y" /* yacc.c:1646  */
+#line 55 "parser.y" /* yacc.c:1646  */
     { if((yyvsp[0].node) != NULL) (yyvsp[-1].block)->lines.push_back((yyvsp[0].node)); }
 #line 1246 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 5:
-#line 57 "parser.y" /* yacc.c:1646  */
+#line 58 "parser.y" /* yacc.c:1646  */
     { (yyval.node) = NULL; std::cout << "Nothing to be used" << std::endl;}
 #line 1252 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 7:
-#line 59 "parser.y" /* yacc.c:1646  */
+#line 60 "parser.y" /* yacc.c:1646  */
     {(yyval.node) = (yyvsp[-1].node); std::cout << "Definitions founded" << std::endl;}
 #line 1258 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 60 "parser.y" /* yacc.c:1646  */
+#line 61 "parser.y" /* yacc.c:1646  */
     { AST::Node* node = symtab.assignVariable((yyvsp[-2].string));
                                 (yyval.node) = new AST::BinOp(node,AST::assign, (yyvsp[0].node));}
 #line 1265 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 64 "parser.y" /* yacc.c:1646  */
+#line 65 "parser.y" /* yacc.c:1646  */
     { (yyval.node) = symtab.newVariable((yyvsp[0].string), NULL); std::cout << "Vairable definition founded" << std::endl;}
 #line 1271 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 10:
-#line 65 "parser.y" /* yacc.c:1646  */
+#line 66 "parser.y" /* yacc.c:1646  */
     { (yyval.node) = symtab.newVariable((yyvsp[0].string), (yyvsp[-2].node)); std::cout << "Vairable definition founded" << std::endl;}
 #line 1277 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 68 "parser.y" /* yacc.c:1646  */
+#line 69 "parser.y" /* yacc.c:1646  */
     { (yyval.node) = new AST::Integer((yyvsp[0].integer)); std::cout << "Integer founded" << std::endl; }
 #line 1283 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 12:
-#line 69 "parser.y" /* yacc.c:1646  */
+#line 70 "parser.y" /* yacc.c:1646  */
     { (yyval.node) = symtab.useVariable((yyvsp[0].string)); std::cout << "Variable founded" << std::endl; }
 #line 1289 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 70 "parser.y" /* yacc.c:1646  */
+#line 71 "parser.y" /* yacc.c:1646  */
     { (yyval.node) = new AST::BinOp((yyvsp[-2].node),AST::plus,(yyvsp[0].node)); std::cout << "Plus operation founded" << std::endl; }
 #line 1295 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 71 "parser.y" /* yacc.c:1646  */
+#line 72 "parser.y" /* yacc.c:1646  */
     { (yyval.node) = new AST::BinOp((yyvsp[-2].node),AST::mult,(yyvsp[0].node)); std::cout << "Multiply operation founded" << std::endl; }
 #line 1301 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 15:
-#line 72 "parser.y" /* yacc.c:1646  */
+#line 73 "parser.y" /* yacc.c:1646  */
     { yyerrok; (yyval.node) = (yyvsp[-1].node); }
 #line 1307 "parser.cpp" /* yacc.c:1646  */
     break;
@@ -1535,5 +1535,5 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 75 "parser.y" /* yacc.c:1906  */
+#line 76 "parser.y" /* yacc.c:1906  */
 

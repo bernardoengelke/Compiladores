@@ -10,7 +10,7 @@ namespace ST {
 
 class Symbol;
 
-enum Type { integer };
+enum Type { integer, d_double };
 enum Kind { variable };
 
 typedef std::map<std::string,Symbol> SymbolList; //Set of Symbols
@@ -36,6 +36,7 @@ class SymbolTable {
         AST::Node* newVariable(std::string id, AST::Node* next);
         AST::Node* assignVariable(std::string id);
         AST::Node* useVariable(std::string id);
+        AST::Node* updateTypeVariable(Type t, AST::Node* raiz);
 };
 
 }

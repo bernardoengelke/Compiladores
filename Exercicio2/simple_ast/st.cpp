@@ -24,3 +24,11 @@ AST::Node* SymbolTable::useVariable(std::string id){
     if ( ! entryList[id].initialized ) yyerror("Variable not initialized yet! %s\n", id.c_str());
     return new AST::Variavel(id, NULL); //Creates variable node anyway
 }
+
+AST::Node* updateTypeVariable(Type t, AST::Node* node){
+  while(node->next){
+    symtab.entryList[node->id].type = t;
+    node = node->next;
+  }
+  return node;
+};

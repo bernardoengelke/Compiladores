@@ -16,6 +16,8 @@ _var  [a-z]+
 
 [ \t]               ; //ignores spaces
 "def"               {return T_DEF;}
+"int"               {return D_INT;}
+"double"            {return D_DOUBLE;}
 {_var}              {yylval.string = strdup(yytext); return T_VAR;}
 {_digs}             {yylval.integer = std::atoi(yytext); return T_INT;}
 "+"                 {return T_PLUS;}
