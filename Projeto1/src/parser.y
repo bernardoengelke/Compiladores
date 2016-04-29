@@ -1,8 +1,8 @@
 %{
-#include "ast.h"
-#include "st.h"
-AST::Block *programRoot; /* the root node of our program AST:: */
-ST::SymbolTable symtab; /* main symbol table */
+// #include "ast.h"
+// #include "st.h"
+// AST::Block *programRoot; /* the root node of our program AST:: */
+// ST::SymbolTable symtab; /* main symbol table */
 extern int yylex();
 extern void yyerror(const char* s, ...);
 %}
@@ -21,7 +21,7 @@ extern void yyerror(const char* s, ...);
 
 /* token defines our terminal symbols (tokens).
  */
-%token D_INT D_REAL D_BOOL
+%token <string>D_INT D_REAL D_BOOL
 
 %token <string> T_VAR
 %token <integer> T_INT
@@ -43,8 +43,11 @@ extern void yyerror(const char* s, ...);
  * Types should match the names used in the union.
  * Example: %type<node> expr
  */
-%type <node> expr line variaveis
-%type <block> lines program
+// %type <node> expr line
+// %type <node> variaveis
+// %type <block> lines program
+%type <integer> expr
+
 
 /* Operator precedence for mathematical operators
  * The latest it is listed, the highest the precedence
@@ -55,27 +58,46 @@ extern void yyerror(const char* s, ...);
 
 /* Starting rule
  */
-%start program
+// %start program
+%start lines
 
 %%
 
-program : lines { programRoot = $1; std::cout << "End of entries" << std::endl;}
-        ;
+// program : lines { programRoot = $1; std::cout << "End of entries" << std::endl;}
+//         ;
+//
+//
+// lines   : line { $$ = new AST::Block(); $$->lines.push_back($1); std::cout << "New line was founded" << std::endl;}
+//         | lines line { if($2 != NULL) $1->lines.push_back($2); }
+//         ;
+//
+// line    : T_NL { $$ = NULL; std::cout << "Nothing to be used" << std::endl;} /*nothing here to be used */
+//         | expr T_NL /*$$ = $1 when nothing is said*/
+//         ;
+//
+// expr    : T_INT { $$ = new AST::Integer($1); std::cout << "Integer founded" << std::endl; }
+//         | T_VAR { $$ = symtab.useVariable($1); std::cout << "Variable founded" << std::endl; }
+//         | expr T_PLUS expr { $$ = new AST::BinOp($1,AST::plus,$3); std::cout << "Plus operation founded" << std::endl; }
+//         | expr T_MULT expr { $$ = new AST::BinOp($1,AST::mult,$3); std::cout << "Multiply operation founded" << std::endl; }
+//         | expr error { yyerrok; $$ = $1; } /*just a point for error recovery*/
+//         ;
+
+// program : lines { programRoot = $1; std::cout << "End of entries" << std::endl;}
+//         ;
 
 
-lines   : line { $$ = new AST::Block(); $$->lines.push_back($1); std::cout << "New line was founded" << std::endl;}
-        | lines line { if($2 != NULL) $1->lines.push_back($2); }
-        ;
+lines   :
+        | lines line;
 
-line    : T_NL { $$ = NULL; std::cout << "Nothing to be used" << std::endl;} /*nothing here to be used */
+line    : T_NL /*nothing here to be used */
         | expr T_NL /*$$ = $1 when nothing is said*/
         ;
 
-expr    : T_INT { $$ = new AST::Integer($1); std::cout << "Integer founded" << std::endl; }
-        | T_VAR { $$ = symtab.useVariable($1); std::cout << "Variable founded" << std::endl; }
-        | expr T_PLUS expr { $$ = new AST::BinOp($1,AST::plus,$3); std::cout << "Plus operation founded" << std::endl; }
-        | expr T_MULT expr { $$ = new AST::BinOp($1,AST::mult,$3); std::cout << "Multiply operation founded" << std::endl; }
-        | expr error { yyerrok; $$ = $1; } /*just a point for error recovery*/
+expr    : T_INT { $$ = $1; }
+        // | T_VAR { $$ = symtab.useVariable($1); std::cout << "Variable founded" << std::endl; }
+        // | expr T_PLUS expr { $$ = new AST::BinOp($1,AST::plus,$3); std::cout << "Plus operation founded" << std::endl; }
+        // | expr T_MULT expr { $$ = new AST::BinOp($1,AST::mult,$3); std::cout << "Multiply operation founded" << std::endl; }
+        // | expr error { yyerrok; $$ = $1; } /*just a point for error recovery*/
         ;
 
 %%

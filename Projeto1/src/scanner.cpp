@@ -849,12 +849,12 @@ YY_RULE_SETUP
 case 8:
 YY_RULE_SETUP
 #line 31 "scanner.l"
-{yylval.boolean = TRUE; return T_TRUE;}
+{yylval.boolean = true; return T_TRUE;}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
 #line 32 "scanner.l"
-{yylval.boolean = FALSE; return T_FALSE;}
+{yylval.boolean = false; return T_FALSE;}
 	YY_BREAK
 /*operadores aritmétricos*/
 case 10:

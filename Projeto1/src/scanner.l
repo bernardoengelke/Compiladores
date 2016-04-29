@@ -28,8 +28,8 @@ _real "."{_digs}|{_digs}"."|{_digs}"."{_digs}
 {_real}             {yylval.real = std::atof(yytext); return T_REAL;}
 
  /*valores booleanos*/
-"TRUE"              {yylval.boolean = TRUE; return T_TRUE;}
-"FALSE"             {yylval.boolean = FALSE; return T_FALSE;}
+"TRUE"              {yylval.boolean = true; return T_TRUE;}
+"FALSE"             {yylval.boolean = false; return T_FALSE;}
 
  /*operadores aritmétricos*/
 "+"                 {return T_PLUS;}
