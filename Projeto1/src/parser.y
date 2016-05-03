@@ -1,7 +1,7 @@
 %{
-// #include "ast.h"
+#include "variableType/variables.h"
 // #include "st.h"
-// AST::Block *programRoot; /* the root node of our program AST:: */
+VAR::Block *programRoot; /* the root node of our program VAR:: */
 // ST::SymbolTable symtab; /* main symbol table */
 extern int yylex();
 extern void yyerror(const char* s, ...);
@@ -17,6 +17,9 @@ extern void yyerror(const char* s, ...);
     int integer;
     float real;
     bool boolean;
+
+    VAR::Node *node;
+    VAR::Block *block;
 }
 
 /* token defines our terminal symbols (tokens).
@@ -38,15 +41,15 @@ extern void yyerror(const char* s, ...);
 %token T_AND T_OR T_NOT
 %token T_OPENP T_CLOSEP
 
-%token T_NL
 /* type defines the type of our nonterminal symbols.
  * Types should match the names used in the union.
  * Example: %type<node> expr
  */
-// %type <node> expr line
+%type <node> expr line
 // %type <node> variaveis
-// %type <block> lines program
-%type <integer> expr
+%type <block> lines program
+
+// %type <integer> expr
 
 
 /* Operator precedence for mathematical operators
@@ -58,8 +61,8 @@ extern void yyerror(const char* s, ...);
 
 /* Starting rule
  */
-// %start program
-%start lines
+%start program
+// %start lines
 
 %%
 
@@ -82,18 +85,21 @@ extern void yyerror(const char* s, ...);
 //         | expr error { yyerrok; $$ = $1; } /*just a point for error recovery*/
 //         ;
 
-// program : lines { programRoot = $1; std::cout << "End of entries" << std::endl;}
-//         ;
-
-
-lines   :
-        | lines line;
-
-line    : T_NL /*nothing here to be used */
-        | expr T_NL /*$$ = $1 when nothing is said*/
+program : lines { programRoot = $1; std::cout << "End of entries" << std::endl; }
         ;
 
-expr    : T_INT { $$ = $1; }
+
+lines   : line { $$ = new VAR::Block(); $$->lines.push_back($1); }
+        | lines line { if($2 != NULL) $1->lines.push_back($2); }
+        ;
+
+
+line    : T_EOFL { $$ = NULL; }/*nothing here to be used */
+        | expr T_EOFL /*$$ = $1 when nothing is said*/
+        ;
+
+expr    : T_INT { $$ = new VAR::Integer($1); }
+        | expr T_PLUS expr { $$ = new VAR::BinOp($1, VAR::T_PLUS, $3); }
         // | T_VAR { $$ = symtab.useVariable($1); std::cout << "Variable founded" << std::endl; }
         // | expr T_PLUS expr { $$ = new AST::BinOp($1,AST::plus,$3); std::cout << "Plus operation founded" << std::endl; }
         // | expr T_MULT expr { $$ = new AST::BinOp($1,AST::mult,$3); std::cout << "Multiply operation founded" << std::endl; }

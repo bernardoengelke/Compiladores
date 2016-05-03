@@ -1,15 +1,24 @@
 #include <iostream>
-// #include "ast.h"
+#include "variableType/variables.h"
 
-// extern AST::Block* programRoot; //set on Bison file
+extern VAR::Block* programRoot; //set on Bison file
+extern FILE* yyin;
 extern int yyparse();
 extern int yydebug;
 
 int main(int argc, char **argv)
 {
-    yydebug = 1;
-    yyparse();                  //parses whole data
-    // programRoot->printTree();   //prints the ASTs
-    // programRoot->computeTree(); //computes the ASTs
+    yydebug = 0;
+    // yyin = stdin;
+    // do {
+    //     yyparse();
+    // } while(!feof(yyin));
+    programRoot->printTree();   //prints the ASTs
+    programRoot->computeTree(); //computes the ASTs
     return 0;
+}
+
+void yyerror(const char* s) {
+    fprintf(stderr, "Erro durante o parsing: %s\n", s);
+    exit(1);
 }

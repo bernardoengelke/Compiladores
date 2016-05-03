@@ -71,8 +71,7 @@ extern int yydebug;
     T_OR = 281,
     T_NOT = 282,
     T_OPENP = 283,
-    T_CLOSEP = 284,
-    T_NL = 285
+    T_CLOSEP = 284
   };
 #endif
 
@@ -88,7 +87,10 @@ union YYSTYPE
     float real;
     bool boolean;
 
-#line 92 "parser.h" /* yacc.c:1909  */
+    VAR::Node *node;
+    VAR::Block *block;
+
+#line 94 "parser.h" /* yacc.c:1909  */
 };
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1

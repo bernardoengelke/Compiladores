@@ -1,5 +1,6 @@
 %{
 #include <string>
+#include "variableType/variables.h"
 #include "parser.h"
 #include "string.h"
 extern int yylineno;
@@ -16,7 +17,7 @@ _real "."{_digs}|{_digs}"."|{_digs}"."{_digs}
 
 %%
 
-[ \t]               ; //ignores spaces
+[ \t \n]               ; //ignores spaces
  /*definições*/
 "int"               {return D_INT;}
 "real"              {return D_REAL;}
@@ -59,9 +60,6 @@ _real "."{_digs}|{_digs}"."|{_digs}"."{_digs}
  /*parenteses*/
 "("                 {return T_OPENP;}
 ")"                 {return T_CLOSEP;}
-
- /*fim de linha*/
-\n                  {return T_NL;}
 
 .                   {yyerror("Unknown token! %c\n", *yytext);} /*complains about every unknown character*/
 

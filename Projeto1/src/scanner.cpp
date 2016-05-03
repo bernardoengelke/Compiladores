@@ -385,8 +385,8 @@ static void yy_fatal_error (yyconst char msg[]  );
 	*yy_cp = '\0'; \
 	(yy_c_buf_p) = yy_cp;
 
-#define YY_NUM_RULES 31
-#define YY_END_OF_BUFFER 32
+#define YY_NUM_RULES 30
+#define YY_END_OF_BUFFER 31
 /* This struct is not used in this scanner,
    but its presence is necessary. */
 struct yy_trans_info
@@ -396,9 +396,9 @@ struct yy_trans_info
 	};
 static yyconst flex_int16_t yy_accept[58] =
     {   0,
-        0,    0,   32,   30,    1,   29,   27,   28,   12,   10,
-       14,   11,   30,   13,    6,   15,   17,   21,   18,   20,
-       30,   30,   30,   30,    5,    5,    5,    5,   26,    7,
+        0,    0,   31,   29,    1,    1,   27,   28,   12,   10,
+       14,   11,   29,   13,    6,   15,   17,   21,   18,   20,
+       29,   29,   29,   29,    5,    5,    5,    5,   26,    7,
         7,    6,   16,   23,   22,    0,    0,   25,    0,    5,
         5,    5,    5,   19,    7,   24,    0,    0,    5,    2,
         5,    0,    8,    4,    3,    9,    0
@@ -499,10 +499,10 @@ static yyconst flex_int16_t yy_chk[112] =
     } ;
 
 /* Table of booleans, true if rule could match eol. */
-static yyconst flex_int32_t yy_rule_can_match_eol[32] =
+static yyconst flex_int32_t yy_rule_can_match_eol[31] =
     {   0,
-0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0,     };
+1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,     };
 
 static yy_state_type yy_last_accepting_state;
 static char *yy_last_accepting_cpos;
@@ -521,11 +521,12 @@ char *yytext;
 #line 1 "scanner.l"
 #line 2 "scanner.l"
 #include <string>
+#include "variableType/variables.h"
 #include "parser.h"
 #include "string.h"
 extern int yylineno;
 void yyerror(const char* s, ...);
-#line 529 "scanner.cpp"
+#line 530 "scanner.cpp"
 
 #define INITIAL 0
 
@@ -712,10 +713,10 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
     
-#line 17 "scanner.l"
+#line 18 "scanner.l"
 
 
-#line 719 "scanner.cpp"
+#line 720 "scanner.cpp"
 
 	if ( !(yy_init) )
 		{
@@ -809,171 +810,165 @@ do_action:	/* This label is used only to access EOF actions. */
 			goto yy_find_action;
 
 case 1:
+/* rule 1 can match eol */
 YY_RULE_SETUP
-#line 19 "scanner.l"
+#line 20 "scanner.l"
 ; //ignores spaces
 	YY_BREAK
 /*definições*/
 case 2:
 YY_RULE_SETUP
-#line 21 "scanner.l"
+#line 22 "scanner.l"
 {return D_INT;}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 22 "scanner.l"
+#line 23 "scanner.l"
 {return D_REAL;}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 23 "scanner.l"
+#line 24 "scanner.l"
 {return D_BOOL;}
 	YY_BREAK
 /*valores*/
 case 5:
 YY_RULE_SETUP
-#line 26 "scanner.l"
+#line 27 "scanner.l"
 {yylval.string = strdup(yytext); return T_VAR;}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 27 "scanner.l"
+#line 28 "scanner.l"
 {yylval.integer = std::atoi(yytext); return T_INT;}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 28 "scanner.l"
+#line 29 "scanner.l"
 {yylval.real = std::atof(yytext); return T_REAL;}
 	YY_BREAK
 /*valores booleanos*/
 case 8:
 YY_RULE_SETUP
-#line 31 "scanner.l"
+#line 32 "scanner.l"
 {yylval.boolean = true; return T_TRUE;}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 32 "scanner.l"
+#line 33 "scanner.l"
 {yylval.boolean = false; return T_FALSE;}
 	YY_BREAK
 /*operadores aritmétricos*/
 case 10:
 YY_RULE_SETUP
-#line 35 "scanner.l"
+#line 36 "scanner.l"
 {return T_PLUS;}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 36 "scanner.l"
+#line 37 "scanner.l"
 {return T_SUB;}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 37 "scanner.l"
+#line 38 "scanner.l"
 {return T_MULT;}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 38 "scanner.l"
+#line 39 "scanner.l"
 {return T_DIV;}
 	YY_BREAK
 /*Separador e atribuiçã*/
 case 14:
 YY_RULE_SETUP
-#line 41 "scanner.l"
+#line 42 "scanner.l"
 {return T_COMMA;}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 42 "scanner.l"
+#line 43 "scanner.l"
 {return T_SEPARATOR;}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 43 "scanner.l"
+#line 44 "scanner.l"
 {return T_ASSIGN;}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 44 "scanner.l"
+#line 45 "scanner.l"
 {return T_EOFL;}
 	YY_BREAK
 /*operadores relacionais*/
 case 18:
 YY_RULE_SETUP
-#line 47 "scanner.l"
+#line 48 "scanner.l"
 {return T_EQUALS;}
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 48 "scanner.l"
+#line 49 "scanner.l"
 {return T_NEQUALS;}
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 49 "scanner.l"
+#line 50 "scanner.l"
 {return T_BIGGEST;}
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 50 "scanner.l"
+#line 51 "scanner.l"
 {return T_SMALLEST;}
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 51 "scanner.l"
+#line 52 "scanner.l"
 {return T_BIGOREQUALS;}
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 52 "scanner.l"
+#line 53 "scanner.l"
 {return T_SMALLOREQUALS;}
 	YY_BREAK
 /*operadores binários*/
 case 24:
 YY_RULE_SETUP
-#line 55 "scanner.l"
+#line 56 "scanner.l"
 {return T_AND;}
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 56 "scanner.l"
+#line 57 "scanner.l"
 {return T_OR;}
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 57 "scanner.l"
+#line 58 "scanner.l"
 {return T_NOT;}
 	YY_BREAK
 /*parenteses*/
 case 27:
 YY_RULE_SETUP
-#line 60 "scanner.l"
+#line 61 "scanner.l"
 {return T_OPENP;}
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 61 "scanner.l"
+#line 62 "scanner.l"
 {return T_CLOSEP;}
 	YY_BREAK
-/*fim de linha*/
 case 29:
-/* rule 29 can match eol */
 YY_RULE_SETUP
 #line 64 "scanner.l"
-{return T_NL;}
+{yyerror("Unknown token! %c\n", *yytext);} /*complains about every unknown character*/
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
 #line 66 "scanner.l"
-{yyerror("Unknown token! %c\n", *yytext);} /*complains about every unknown character*/
-	YY_BREAK
-case 31:
-YY_RULE_SETUP
-#line 68 "scanner.l"
 YY_FATAL_ERROR( "flex scanner jammed" );
 	YY_BREAK
-#line 977 "scanner.cpp"
+#line 972 "scanner.cpp"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1983,7 +1978,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 68 "scanner.l"
+#line 66 "scanner.l"
 
 
 
