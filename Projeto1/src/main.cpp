@@ -13,8 +13,8 @@ int main(int argc, char **argv)
     // do {
     //     yyparse();
     // } while(!feof(yyin));
-    programRoot->printTree();   //prints the ASTs
-    programRoot->computeTree(); //computes the ASTs
+    programRoot->printTree();
+    programRoot->computeTree();
     return 0;
 }
 
