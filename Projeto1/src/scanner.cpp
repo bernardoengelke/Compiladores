@@ -888,7 +888,7 @@ YY_RULE_SETUP
 case 15:
 YY_RULE_SETUP
 #line 43 "scanner.l"
-{return T_SEPARATOR;}
+{return T_ASSIGN_TYPE;}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP

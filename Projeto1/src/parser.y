@@ -1,8 +1,8 @@
 %{
 #include "variableType/variables.h"
-// #include "st.h"
+#include "symbolTable/symbolTable.h"
 VAR::Block *programRoot; /* the root node of our program VAR:: */
-// ST::SymbolTable symtab; /* main symbol table */
+ST::SymbolTable symtab; /* main symbol table */
 extern int yylex();
 extern void yyerror(const char* s, ...);
 %}
@@ -33,7 +33,7 @@ extern void yyerror(const char* s, ...);
 %token <boolean> T_TRUE T_FALSE
 
 %token T_PLUS T_SUB T_MULT T_DIV
-%token T_COMMA T_SEPARATOR T_ASSIGN T_EOFL
+%token T_COMMA T_ASSIGN_TYPE T_ASSIGN T_EOFL
 
 %token T_EQUALS T_NEQUALS
 %token T_BIGGEST T_SMALLEST T_BIGOREQUALS T_SMALLOREQUALS
@@ -41,16 +41,9 @@ extern void yyerror(const char* s, ...);
 %token T_AND T_OR T_NOT
 %token T_OPENP T_CLOSEP
 
-/* type defines the type of our nonterminal symbols.
- * Types should match the names used in the union.
- * Example: %type<node> expr
- */
-%type <node> expr line
-// %type <node> variaveis
+
+%type <node> expr line variables
 %type <block> lines program
-
-// %type <integer> expr
-
 
 /* Operator precedence for mathematical operators
  * The latest it is listed, the highest the precedence
@@ -62,29 +55,8 @@ extern void yyerror(const char* s, ...);
 /* Starting rule
  */
 %start program
-// %start lines
 
 %%
-
-// program : lines { programRoot = $1; std::cout << "End of entries" << std::endl;}
-//         ;
-//
-//
-// lines   : line { $$ = new AST::Block(); $$->lines.push_back($1); std::cout << "New line was founded" << std::endl;}
-//         | lines line { if($2 != NULL) $1->lines.push_back($2); }
-//         ;
-//
-// line    : T_NL { $$ = NULL; std::cout << "Nothing to be used" << std::endl;} /*nothing here to be used */
-//         | expr T_NL /*$$ = $1 when nothing is said*/
-//         ;
-//
-// expr    : T_INT { $$ = new AST::Integer($1); std::cout << "Integer founded" << std::endl; }
-//         | T_VAR { $$ = symtab.useVariable($1); std::cout << "Variable founded" << std::endl; }
-//         | expr T_PLUS expr { $$ = new AST::BinOp($1,AST::plus,$3); std::cout << "Plus operation founded" << std::endl; }
-//         | expr T_MULT expr { $$ = new AST::BinOp($1,AST::mult,$3); std::cout << "Multiply operation founded" << std::endl; }
-//         | expr error { yyerrok; $$ = $1; } /*just a point for error recovery*/
-//         ;
-
 program : lines { programRoot = $1; std::cout << "End of entries" << std::endl; }
         ;
 
@@ -96,11 +68,21 @@ lines   : line { $$ = new VAR::Block(); $$->lines.push_back($1); }
 
 line    : T_EOFL { $$ = NULL; }/*nothing here to be used */
         | expr T_EOFL /*$$ = $1 when nothing is said*/
+        | D_INT T_ASSIGN_TYPE variables T_EOFL {$$ = symtab.updateTypeVariable(ST::integer, $3); std::cout << "Definitions founded" << std::endl;}
+        //| D_DOUBLE T_ASSIGN_TYPE variables T_NL {$$ = symtab.updateTypeVariable($3); std::cout << "Definitions founded" << std::endl;}
+        //  | D_BOOL T_ASSIGN_TYPE variables T_NL {$$ = symtab.updateTypeVariable($3); std::cout << "Definitions founded" << std::endl;}
+        | T_VAR T_ASSIGN expr { VAR::Node* node = symtab.assignVariable($1);
+                                $$ = new VAR::BinOp(node,VAR::T_ASSIGN, $3);}
         ;
 
+
+variables : T_VAR { $$ = symtab.newVariable($1, NULL); std::cout << "Vairable definition founded" << std::endl;}
+          | variables T_COMMA T_VAR { $$ = symtab.newVariable($3, $1); std::cout << "Vairable definition founded" << std::endl;}
+          ;
+
 expr    : T_INT { $$ = new VAR::Integer($1); }
+        | T_VAR { $$ = symtab.useVariable($1); std::cout << "Variable founded" << std::endl; }
         | expr T_PLUS expr { $$ = new VAR::BinOp($1, VAR::T_PLUS, $3); }
-        // | T_VAR { $$ = symtab.useVariable($1); std::cout << "Variable founded" << std::endl; }
         // | expr T_PLUS expr { $$ = new AST::BinOp($1,AST::plus,$3); std::cout << "Plus operation founded" << std::endl; }
         // | expr T_MULT expr { $$ = new AST::BinOp($1,AST::mult,$3); std::cout << "Multiply operation founded" << std::endl; }
         // | expr error { yyerrok; $$ = $1; } /*just a point for error recovery*/

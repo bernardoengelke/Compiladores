@@ -58,7 +58,7 @@ extern int yydebug;
     T_MULT = 268,
     T_DIV = 269,
     T_COMMA = 270,
-    T_SEPARATOR = 271,
+    T_ASSIGN_TYPE = 271,
     T_ASSIGN = 272,
     T_EOFL = 273,
     T_EQUALS = 274,

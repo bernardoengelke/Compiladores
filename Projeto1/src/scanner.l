@@ -40,7 +40,7 @@ _real "."{_digs}|{_digs}"."|{_digs}"."{_digs}
 
  /*Separador e atribuiçã*/
 ","                 {return T_COMMA;}
-":"                 {return T_SEPARATOR;}
+":"                 {return T_ASSIGN_TYPE;}
 ":="                {return T_ASSIGN;}
 ";"                 {return T_EOFL;}
 

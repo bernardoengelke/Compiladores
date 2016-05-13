@@ -10,7 +10,7 @@ namespace ST {
 
 class Symbol;
 
-enum Type { integer, real };
+enum Type { integer, real , boolean};
 enum Kind { variable };
 
 typedef std::map<std::string,Symbol> SymbolList; //Set of Symbols

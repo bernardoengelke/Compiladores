@@ -7,8 +7,8 @@ OUTPUT=myparse
 
 all: flex yacc clang
 
-clang: *.cpp *.h variableType/*.h variableType/*.cpp symbolTable/*.h symbolTable/*.cpp
-	${CC} -o ${OUTPUT} *.cpp variableType/*.cpp symbolTable/*.cpp ${LLVMPARAM} ${PARAM}
+clang: variableType/*.h variableType/*.cpp symbolTable/*.h symbolTable/*.cpp *.cpp *.h
+	${CC} -o ${OUTPUT} variableType/*.cpp symbolTable/*.cpp *.cpp ${LLVMPARAM} ${PARAM}
 
 yacc: parser.y
 	${BISON} --defines=parser.h --output=parser.cpp parser.y
