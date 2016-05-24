@@ -29,10 +29,10 @@ VAR::Node* SymbolTable::updateTypeVariable(Type type, VAR::Node* root){
   VAR::Variable* varRoot = dynamic_cast<VAR::Variable*>(root);
   symtab.entryList[varRoot->name].type = type;
 
-  VAR::Variable* nodeVar = dynamic_cast<VAR::Variable*>(nodeVar->next);
-  while(nodeVar){
-     symtab.entryList[varRoot->name].type = type;
-     nodeVar = dynamic_cast<VAR::Variable*>(nodeVar->next);
+  while(varRoot->next){
+    varRoot = dynamic_cast<VAR::Variable*>(varRoot->next);
+    symtab.entryList[varRoot->name].type = type;
   }
-  return root;
+
+  return varRoot;
 }

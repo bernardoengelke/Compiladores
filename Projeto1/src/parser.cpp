@@ -1278,7 +1278,7 @@ yyreduce:
 
   case 7:
 #line 71 "parser.y" /* yacc.c:1646  */
-    {/*VAR::Node* node = symtab.updateTypeVariable(ST::D_INTEGER, $3); $$ = node;*/ std::cout << "Definitions founded" << std::endl;}
+    {(yyval.node) = symtab.updateTypeVariable(ST::D_INTEGER, (yyvsp[-1].node)); std::cout << "Definitions founded" << std::endl;}
 #line 1283 "parser.cpp" /* yacc.c:1646  */
     break;
 

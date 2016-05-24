@@ -68,7 +68,7 @@ lines   : line { $$ = new VAR::Block(); $$->lines.push_back($1); }
 
 line    : T_EOFL { $$ = NULL; }/*nothing here to be used */
         | expr T_EOFL /*$$ = $1 when nothing is said*/
-        | D_INT T_ASSIGN_TYPE variables T_EOFL {/*VAR::Node* node = symtab.updateTypeVariable(ST::D_INTEGER, $3); $$ = node;*/ std::cout << "Definitions founded" << std::endl;}
+        | D_INT T_ASSIGN_TYPE variables T_EOFL {$$ = symtab.updateTypeVariable(ST::D_INTEGER, $3); std::cout << "Definitions founded" << std::endl;}
         | T_VAR T_ASSIGN expr { VAR::Node* node = symtab.assignVariable($1); $$ = new VAR::BinOp(node,VAR::T_ASSIGN, $3);}
         ;
 
