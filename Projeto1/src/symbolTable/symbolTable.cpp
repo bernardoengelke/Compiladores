@@ -25,13 +25,14 @@ VAR::Node* SymbolTable::useVariable(std::string id){
     return new VAR::Variable(id, NULL); //Creates variable node anyway
 }
 
-VAR::Node* updateTypeVariable(Type type, VAR::Node* root){
+VAR::Node* SymbolTable::updateTypeVariable(Type type, VAR::Node* root){
   VAR::Variable* varRoot = dynamic_cast<VAR::Variable*>(root);
   symtab.entryList[varRoot->name].type = type;
 
-  // while(nodeVar->next){
-  //   nodeVar = dynamic_cast<VAR::Variable*>(nodeVar->next);
-  //   symtab.entryList[nodeVar->name].type = t;
-  // }
+  VAR::Variable* nodeVar = dynamic_cast<VAR::Variable*>(nodeVar->next);
+  while(nodeVar){
+     symtab.entryList[varRoot->name].type = type;
+     nodeVar = dynamic_cast<VAR::Variable*>(nodeVar->next);
+  }
   return root;
 }
