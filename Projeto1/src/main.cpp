@@ -9,10 +9,7 @@ extern int yydebug;
 int main(int argc, char **argv)
 {
     yydebug = 0;
-    // yyin = stdin;
-    // do {
-    //     yyparse();
-    // } while(!feof(yyin));
+    yyparse();
     programRoot->printTree();
     programRoot->computeTree();
     return 0;

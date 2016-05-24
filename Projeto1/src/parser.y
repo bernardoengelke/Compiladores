@@ -8,10 +8,10 @@ extern void yyerror(const char* s, ...);
 %}
 
 %define parse.trace
+
 /* yylval == %union
  * union informs the different ways we can store data
  */
-
 %union {
     const char * string;
     int integer;
@@ -68,11 +68,8 @@ lines   : line { $$ = new VAR::Block(); $$->lines.push_back($1); }
 
 line    : T_EOFL { $$ = NULL; }/*nothing here to be used */
         | expr T_EOFL /*$$ = $1 when nothing is said*/
-        | D_INT T_ASSIGN_TYPE variables T_EOFL {$$ = symtab.updateTypeVariable(ST::integer, $3); std::cout << "Definitions founded" << std::endl;}
-        //| D_DOUBLE T_ASSIGN_TYPE variables T_NL {$$ = symtab.updateTypeVariable($3); std::cout << "Definitions founded" << std::endl;}
-        //  | D_BOOL T_ASSIGN_TYPE variables T_NL {$$ = symtab.updateTypeVariable($3); std::cout << "Definitions founded" << std::endl;}
-        | T_VAR T_ASSIGN expr { VAR::Node* node = symtab.assignVariable($1);
-                                $$ = new VAR::BinOp(node,VAR::T_ASSIGN, $3);}
+        | D_INT T_ASSIGN_TYPE variables T_EOFL {/*VAR::Node* node = symtab.updateTypeVariable(ST::D_INTEGER, $3); $$ = node;*/ std::cout << "Definitions founded" << std::endl;}
+        | T_VAR T_ASSIGN expr { VAR::Node* node = symtab.assignVariable($1); $$ = new VAR::BinOp(node,VAR::T_ASSIGN, $3);}
         ;
 
 
@@ -83,9 +80,7 @@ variables : T_VAR { $$ = symtab.newVariable($1, NULL); std::cout << "Vairable de
 expr    : T_INT { $$ = new VAR::Integer($1); }
         | T_VAR { $$ = symtab.useVariable($1); std::cout << "Variable founded" << std::endl; }
         | expr T_PLUS expr { $$ = new VAR::BinOp($1, VAR::T_PLUS, $3); }
-        // | expr T_PLUS expr { $$ = new AST::BinOp($1,AST::plus,$3); std::cout << "Plus operation founded" << std::endl; }
-        // | expr T_MULT expr { $$ = new AST::BinOp($1,AST::mult,$3); std::cout << "Multiply operation founded" << std::endl; }
-        // | expr error { yyerrok; $$ = $1; } /*just a point for error recovery*/
+        | expr error { yyerrok; $$ = $1; } /*just a point for error recovery*/
         ;
 
 %%

@@ -7,7 +7,7 @@ extern SymbolTable symtab;
 VAR::Node* SymbolTable::newVariable(std::string id, VAR::Node* next){
     if ( checkId(id) ) yyerror("Variable redefinition! %s\n", id.c_str());
     else {
-       Symbol entry(integer, variable, 0, false);
+       Symbol entry(D_INTEGER, VARIABLE, 0, false);
        addSymbol(id,entry); //Adds variable to symbol table
     }
     return new VAR::Variable(id, next); //Creates variable node anyway
@@ -25,12 +25,13 @@ VAR::Node* SymbolTable::useVariable(std::string id){
     return new VAR::Variable(id, NULL); //Creates variable node anyway
 }
 
-VAR::Node* updateTypeVariable(Type t, VAR::Node* node){
-  VAR::Variable* nodeVar = dynamic_cast<VAR::Variable*>(node);
-  do{
-    symtab.entryList[nodeVar->name].type = t;
-    if(nodeVar->next)
-      nodeVar = dynamic_cast<VAR::Variable*>(nodeVar->next);
-  }while(nodeVar->next);
-  return nodeVar;
+VAR::Node* updateTypeVariable(Type type, VAR::Node* root){
+  VAR::Variable* varRoot = dynamic_cast<VAR::Variable*>(root);
+  symtab.entryList[varRoot->name].type = type;
+
+  // while(nodeVar->next){
+  //   nodeVar = dynamic_cast<VAR::Variable*>(nodeVar->next);
+  //   symtab.entryList[nodeVar->name].type = t;
+  // }
+  return root;
 }
