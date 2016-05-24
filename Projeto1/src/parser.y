@@ -80,6 +80,9 @@ variables : T_VAR { $$ = symtab.newVariable($1, NULL); std::cout << "Vairable de
 expr    : T_INT { $$ = new VAR::Integer($1); }
         | T_VAR { $$ = symtab.useVariable($1); std::cout << "Variable founded" << std::endl; }
         | expr T_PLUS expr { $$ = new VAR::BinOp($1, VAR::T_PLUS, $3); }
+        | expr T_SUB expr { $$ = new VAR::BinOp($1, VAR::T_SUB, $3); }
+        | expr T_MULT expr { $$ = new VAR::BinOp($1, VAR::T_MULT, $3); }
+        | expr T_DIV expr { $$ = new VAR::BinOp($1, VAR::T_DIV, $3); }
         | expr error { yyerrok; $$ = $1; } /*just a point for error recovery*/
         ;
 
