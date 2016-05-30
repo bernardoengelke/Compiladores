@@ -46,14 +46,14 @@ int BinOp::computeTree(){
         value = rvalue; break;
       }
 
-      case T_EQUALS: std::cout << "not implemented"; break;
-      case T_NEQUALS: std::cout << "not implemented"; break;
-      case T_BIGGEST: std::cout << "not implemented"; break;
-      case T_SMALLEST: std::cout << "not implemented"; break;
-      case T_BIGOREQUALS: std::cout << "not implemented"; break;
-      case T_SMALLOREQUALS: std::cout << "not implemented"; break;
-      case T_AND: std::cout << "not implemented"; break;
-      case T_OR: std::cout << "not implemented"; break;
+      case T_EQUALS: value = lvalue == rvalue; break;
+      case T_NEQUALS: value = lvalue != rvalue; break;
+      case T_BIGGEST: value = lvalue > rvalue; break;
+      case T_SMALLEST: value = lvalue < rvalue; break;
+      case T_BIGOREQUALS: value = lvalue >= rvalue; break;
+      case T_SMALLOREQUALS: value = lvalue <= rvalue; break;
+      case T_AND: value = lvalue && rvalue; break;
+      case T_OR: value = lvalue || rvalue; break;
       case T_NOT: std::cout << "not implemented"; break;
     }
     return value;
