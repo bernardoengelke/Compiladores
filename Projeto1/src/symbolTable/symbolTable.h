@@ -13,7 +13,8 @@ class Symbol;
 enum Type {
   D_INTEGER,
   D_REAL ,
-  D_BOOLEAN
+  D_BOOLEAN,
+  UNKNOWN
 };
 
 enum Kind {
@@ -26,11 +27,10 @@ class Symbol {
     public:
         Type type;              /*[Return] type of Symbol: integer, double.*/
         Kind kind;              /*Kind of symbol: variable, function, etc.*/
-        int64_t value;          /*Space to store a value while we are doing interpretation.*/
         bool initialized;       /*Defines if symbol has been initialized or not.*/
-        Symbol(Type type, Kind kind, int64_t value, bool initialized) :
-            type(type), kind(kind), value(value), initialized(initialized) {  }
-        Symbol() {type = D_INTEGER; kind = VARIABLE; value = 0; initialized = false;}
+        Symbol(Type type, Kind kind, bool initialized) :
+            type(type), kind(kind), initialized(initialized) {  }
+        Symbol() {type = UNKNOWN; kind = VARIABLE; initialized = false;}
 };
 
 class SymbolTable {

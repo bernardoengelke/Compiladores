@@ -11,7 +11,7 @@ int main(int argc, char **argv)
     yydebug = 0;
     yyparse();
     programRoot->printTree();
-    programRoot->computeTree();
+    //programRoot->computeTree();
     return 0;
 }
 

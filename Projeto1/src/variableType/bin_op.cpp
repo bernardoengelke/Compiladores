@@ -29,32 +29,3 @@ void BinOp::printTree(){
     right->printTree();
     return;
 }
-
-int BinOp::computeTree(){
-    int value, lvalue, rvalue;
-    lvalue = left->computeTree();
-    rvalue = right->computeTree();
-    switch(op){
-      case T_PLUS: value = lvalue + rvalue; break;
-      case T_SUB: value = lvalue - rvalue; break;
-      case T_MULT: value = lvalue * rvalue; break;
-      case T_DIV: value = lvalue / rvalue; break;
-
-      case T_ASSIGN: {
-        Variable* leftVar = dynamic_cast<Variable*>(left);
-        symtab.entryList[leftVar->name].value = rvalue;
-        value = rvalue; break;
-      }
-
-      case T_EQUALS: std::cout << "not implemented"; break;
-      case T_NEQUALS: std::cout << "not implemented"; break;
-      case T_BIGGEST: std::cout << "not implemented"; break;
-      case T_SMALLEST: std::cout << "not implemented"; break;
-      case T_BIGOREQUALS: std::cout << "not implemented"; break;
-      case T_SMALLOREQUALS: std::cout << "not implemented"; break;
-      case T_AND: std::cout << "not implemented"; break;
-      case T_OR: std::cout << "not implemented"; break;
-      case T_NOT: std::cout << "not implemented"; break;
-    }
-    return value;
-}

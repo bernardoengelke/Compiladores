@@ -67,7 +67,6 @@ lines   : line { $$ = new VAR::Block(); $$->lines.push_back($1); }
 
 
 line    : T_EOFL { $$ = NULL; }/*nothing here to be used */
-        | expr T_EOFL /*$$ = $1 when nothing is said*/
         | D_INT T_ASSIGN_TYPE variables T_EOFL {$$ = symtab.updateTypeVariable(ST::D_INTEGER, $3); std::cout << "Definitions founded" << std::endl;}
         | D_REAL T_ASSIGN_TYPE variables T_EOFL {$$ = symtab.updateTypeVariable(ST::D_REAL, $3); std::cout << "Definitions founded" << std::endl;}
         | D_BOOL T_ASSIGN_TYPE variables T_EOFL {$$ = symtab.updateTypeVariable(ST::D_BOOLEAN, $3); std::cout << "Definitions founded" << std::endl;}
@@ -80,6 +79,9 @@ variables : T_VAR { $$ = symtab.newVariable($1, NULL); std::cout << "Vairable de
           ;
 
 expr    : T_INT { $$ = new VAR::Integer($1); }
+        | T_REAL { $$ = new VAR::Real($1); }
+        | T_TRUE { $$ = new VAR::Bool($1); }
+        | T_FALSE { $$ = new VAR::Bool($1); }
         | T_VAR { $$ = symtab.useVariable($1); std::cout << "Variable founded" << std::endl; }
         | expr T_PLUS expr { $$ = new VAR::BinOp($1, VAR::T_PLUS, $3); }
         | expr T_SUB expr { $$ = new VAR::BinOp($1, VAR::T_SUB, $3); }
