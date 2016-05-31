@@ -6,7 +6,10 @@ using namespace VAR;
 extern ST::SymbolTable symtab;
 
 void BinOp::printTree(){
-    left->printTree();
+    if(op != T_NOT){
+      left->printTree();
+    }
+    
     switch(op){
         case T_PLUS: std::cout << " + "; break;
         case T_SUB: std::cout << " - "; break;

@@ -5,81 +5,86 @@
 
 namespace VAR {
 
-//Binary operations
-enum Operation {
-  T_PLUS,
-  T_SUB,
-  T_MULT,
-  T_DIV,
+  //Binary operations
+  enum Operation {
+    T_PLUS,
+    T_SUB,
+    T_MULT,
+    T_DIV,
 
-  T_ASSIGN,
+    T_ASSIGN,
 
-  T_EQUALS,
-  T_NEQUALS,
-  T_BIGGEST,
-  T_SMALLEST,
-  T_BIGOREQUALS,
-  T_SMALLOREQUALS,
+    T_EQUALS,
+    T_NEQUALS,
+    T_BIGGEST,
+    T_SMALLEST,
+    T_BIGOREQUALS,
+    T_SMALLOREQUALS,
 
-  T_AND,
-  T_OR,
-  T_NOT
-};
+    T_AND,
+    T_OR,
+    T_NOT
+  };
 
-class Node;
+  class Node;
 
-typedef std::vector<Node*> NodeList; //List of ASTs
+  typedef std::vector<Node*> NodeList;
 
-class Node {
+  class Node {
     public:
-        virtual ~Node() {}
-        virtual void printTree(){}
-};
+      virtual ~Node() {}
+      virtual void printTree(){}
+  };
 
-class Integer : public Node {
+  class Integer : public Node {
     public:
-        int value;
-        Integer(int value) : value(value) {}
-        void printTree();
-};
+      int value;
+      Integer(int value) : value(value) {}
+      void printTree();
+  };
 
-class Real : public Node {
+  class Real : public Node {
     public:
-        float value;
-        Real(float value) : value(value) {}
-        void printTree();
-};
+      float value;
+      Real(float value) : value(value) {}
+      void printTree();
+  };
 
-class Bool : public Node {
+  class Bool : public Node {
     public:
-        bool value;
-        Bool(bool value) : value(value) {}
-        void printTree();
-};
+      bool value;
+      Bool(bool value) : value(value) {}
+      void printTree();
+  };
 
-class Variable : public Node {
+  class Definition : public Node {
     public:
-        std::string name;
-        Node *next;
-        Variable(std::string name, Node *node) : name(name), next(node){}
-        void printTree();
-};
+      Node *root;
+      Definition(Node *node) : root(node) {}
+      void printTree();
+  };
 
-class BinOp : public Node {
+  class Variable : public Node {
     public:
-        Operation op;
-        Node *left;
-        Node *right;
-        BinOp(Node *left, Operation op, Node *right) :
-            left(left), right(right), op(op) {}
-        void printTree();
-};
+      std::string name;
+      Node *next;
+      Variable(std::string name, Node *node) : name(name), next(node) {}
+      void printTree();
+  };
 
-class Block : public Node {
+  class BinOp : public Node {
     public:
-        NodeList lines;
-        Block() {}
-        void printTree();
-};
+      Operation op;
+      Node *left;
+      Node *right;
+      BinOp(Node *left, Operation op, Node *right) : left(left), right(right), op(op) {}
+      void printTree();
+  };
 
+  class Block : public Node {
+    public:
+      NodeList lines;
+      Block() {}
+      void printTree();
+  };
 }

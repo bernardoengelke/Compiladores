@@ -68,7 +68,7 @@ lines   : line { $$ = new VAR::Block(); $$->lines.push_back($1); }
 
 
 line    : T_EOFL { $$ = NULL; }/*nothing here to be used */
-        | D_INT T_ASSIGN_TYPE variables T_EOFL {$$ = symtab.updateTypeVariable(ST::D_INTEGER, $3); }
+        | D_INT T_ASSIGN_TYPE variables T_EOFL { VAR::Node *root = symtab.updateTypeVariable(ST::D_INTEGER, $3); $$ = new VAR::Definition(root);}
         | D_REAL T_ASSIGN_TYPE variables T_EOFL {$$ = symtab.updateTypeVariable(ST::D_REAL, $3); }
         | D_BOOL T_ASSIGN_TYPE variables T_EOFL {$$ = symtab.updateTypeVariable(ST::D_BOOLEAN, $3); }
         | T_VAR T_ASSIGN expr { VAR::Node* node = symtab.assignVariable($1); $$ = new VAR::BinOp(node,VAR::T_ASSIGN, $3);}
@@ -96,7 +96,7 @@ expr    : T_INT { $$ = new VAR::Integer($1); }
         | expr T_SMALLOREQUALS expr { $$ = new VAR::BinOp($1, VAR::T_SMALLOREQUALS, $3); }
         | expr T_AND expr { $$ = new VAR::BinOp($1, VAR::T_AND, $3); }
         | expr T_OR expr { $$ = new VAR::BinOp($1, VAR::T_OR, $3); }
-        | expr T_NOT expr { $$ = new VAR::BinOp($1, VAR::T_NOT, $3); }
+        | T_NOT expr { $$ = new VAR::BinOp(NULL, VAR::T_NOT, $2); }
         | T_OPENP expr T_CLOSEP { $$ = $2; }
         | expr error { yyerrok; $$ = $1; } /*just a point for error recovery*/
         ;

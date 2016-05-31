@@ -1,4 +1,3 @@
-/*Symbol Table definition*/
 #pragma once
 
 #include <map>

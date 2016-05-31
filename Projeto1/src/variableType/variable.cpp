@@ -6,12 +6,28 @@ using namespace VAR;
 extern ST::SymbolTable symtab;
 
 void Variable::printTree(){
+  if(!next){
+    std::cout << "variável ";
 
-    std::cout << name;
-    if(next){
-      Variable* node = dynamic_cast<Variable*>(next);
-      std::cout << ",";
-      node->printTree();
+    switch (symtab.entryList[name].type){
+      case ST::D_INTEGER:
+        std::cout << "inteira: ";
+        break;
+      case ST::D_REAL:
+        std::cout << "real: ";
+        break;
+      case ST::D_BOOLEAN:
+        std::cout << "booleana: ";
+        break;
+      default:
+        std::cout << "desconhecida: ";
+        break;
     }
-    return;
+  }else{
+    Variable* node = dynamic_cast<Variable*>(next);
+    node->printTree();
+    std::cout << ", ";
+  }
+  std::cout << name;
+  return;
 }
