@@ -81,9 +81,8 @@ variables : T_VAR { $$ = symtab.newVariable($1, NULL); }
 
 expr    : T_INT { $$ = new VAR::Integer($1); }
         | T_REAL { $$ = new VAR::Real($1); }
-        | T_TRUE { $$ = new VAR::Bool($1); }
-        | T_FALSE { $$ = new VAR::Bool($1); }
         | T_VAR { $$ = symtab.useVariable($1); }
+        | T_SUB expr { $$ = new VAR::BinOp(NULL, VAR::T_SUB, $2); }
         | expr T_PLUS expr { $$ = new VAR::BinOp($1, VAR::T_PLUS, $3); }
         | expr T_SUB expr { $$ = new VAR::BinOp($1, VAR::T_SUB, $3); }
         | expr T_MULT expr { $$ = new VAR::BinOp($1, VAR::T_MULT, $3); }
@@ -94,10 +93,13 @@ expr    : T_INT { $$ = new VAR::Integer($1); }
         | expr T_NEQUALS expr { $$ = new VAR::BinOp($1, VAR::T_NEQUALS, $3); }
         | expr T_BIGOREQUALS expr { $$ = new VAR::BinOp($1, VAR::T_BIGOREQUALS, $3); }
         | expr T_SMALLOREQUALS expr { $$ = new VAR::BinOp($1, VAR::T_SMALLOREQUALS, $3); }
+        | T_OPENP expr T_CLOSEP { $$ = $2; }
+        | T_TRUE { $$ = new VAR::Bool($1); }
+        | T_FALSE { $$ = new VAR::Bool($1); }
+        | T_NOT expr { $$ = new VAR::BinOp(NULL, VAR::T_NOT, $2); }
         | expr T_AND expr { $$ = new VAR::BinOp($1, VAR::T_AND, $3); }
         | expr T_OR expr { $$ = new VAR::BinOp($1, VAR::T_OR, $3); }
-        | T_NOT expr { $$ = new VAR::BinOp(NULL, VAR::T_NOT, $2); }
-        | T_OPENP expr T_CLOSEP { $$ = $2; }
         | expr error { yyerrok; $$ = $1; } /*just a point for error recovery*/
         ;
+
 %%

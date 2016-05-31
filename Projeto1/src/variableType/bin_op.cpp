@@ -6,14 +6,21 @@ using namespace VAR;
 extern ST::SymbolTable symtab;
 
 void BinOp::printTree(){
-    if(op != T_NOT){
+    if(left){
       left->printTree();
     }
-    
-    switch(op){
-        case T_PLUS: std::cout << " + "; break;
-        case T_SUB: std::cout << " - "; break;
-        case T_MULT: std::cout << " * "; break;
+
+  switch(op){
+    case T_PLUS: std::cout << " + "; break;
+    case T_SUB:
+      if(left){
+        std::cout << " subtração ";
+      }else{
+        std::cout << " unário ";
+      }
+
+      break;
+    case T_MULT: std::cout << " * "; break;
         case T_DIV: std::cout << " / "; break;
 
         case T_ASSIGN: std::cout << " := "; break;
