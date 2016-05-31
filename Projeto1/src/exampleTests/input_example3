@@ -1,0 +1,7 @@
+def fun bool: true() return TRUE; end def
+int: xyz;
+decl fun int: soma(int: a, int: b);
+def fun int: soma(int: a, int: b)
+return a + b;
+end def
+xyz:= soma(1,1);

@@ -26,6 +26,11 @@ namespace VAR {
     T_NOT
   };
 
+  enum Genre {
+    MASC,
+    FEM
+  };
+
   class Node;
 
   typedef std::vector<Node*> NodeList;
@@ -57,19 +62,21 @@ namespace VAR {
       void printTree();
   };
 
-  class Definition : public Node {
-    public:
-      Node *root;
-      Definition(Node *node) : root(node) {}
-      void printTree();
-  };
-
   class Variable : public Node {
     public:
       std::string name;
       Node *next;
       Variable(std::string name, Node *node) : name(name), next(node) {}
       void printTree();
+      static void printTypeVariable(Node* node, Genre genre);
+  };
+
+  class Definition : public Node {
+    public:
+      Node *root;
+      Definition(Node *node) : root(node) {}
+      void printTree();
+      void printListNameOfVariable(Variable* varNode);
   };
 
   class BinOp : public Node {

@@ -4,5 +4,6 @@
 using namespace VAR;
 
 void Integer::printTree(){
-  std::cout<<value;
+  std::cout << "valor inteiro ";
+  std::cout << value;
 }

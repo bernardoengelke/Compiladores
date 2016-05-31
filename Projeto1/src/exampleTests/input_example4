@@ -1,0 +1,9 @@
+int: i;
+bool: true;
+if 10.0 > -2.0
+then
+i:= 5;
+else i:= 3;
+end if
+true:= TRUE;
+if true then i:= 0; end if

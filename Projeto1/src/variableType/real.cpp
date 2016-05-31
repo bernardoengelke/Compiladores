@@ -4,5 +4,6 @@
 using namespace VAR;
 
 void Real::printTree(){
-  std::cout<<value;
+  std::cout << "valor real ";
+  std::cout << value;
 }

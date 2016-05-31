@@ -19,5 +19,20 @@ flex: scanner.l
 clean:
 	rm parser.cpp parser.h scanner.cpp ${OUTPUT}
 
-test: all
-	./${OUTPUT} < input_example
+test1: all
+	./${OUTPUT} < exampleTests/input_example1
+
+test2: all
+	./${OUTPUT} < exampleTests/input_example2
+
+test3: all
+	./${OUTPUT} < exampleTests/input_example3
+
+test4: all
+	./${OUTPUT} < exampleTests/input_example4
+
+test5: all
+	./${OUTPUT} < exampleTests/input_example5
+
+test6: all
+	./${OUTPUT} < exampleTests/input_example6

@@ -5,29 +5,27 @@ using namespace VAR;
 
 extern ST::SymbolTable symtab;
 
-void Variable::printTree(){
-  if(!next){
-    std::cout << "variável ";
+void Variable::printTypeVariable(Node* node, Genre genre){
+  std::cout << "variável ";
+  Variable* varNode = dynamic_cast<Variable*>(node);
+  std::string stringToPrint;
 
-    switch (symtab.entryList[name].type){
-      case ST::D_INTEGER:
-        std::cout << "inteira: ";
-        break;
-      case ST::D_REAL:
-        std::cout << "real: ";
-        break;
-      case ST::D_BOOLEAN:
-        std::cout << "booleana: ";
-        break;
-      default:
-        std::cout << "desconhecida: ";
-        break;
-    }
-  }else{
-    Variable* node = dynamic_cast<Variable*>(next);
-    node->printTree();
-    std::cout << ", ";
+  switch (symtab.entryList[varNode->name].type){
+    case ST::D_INTEGER:
+      stringToPrint = genre == Genre::MASC ? "intero" : "inteira"; break;
+    case ST::D_REAL:
+      stringToPrint = "real"; break;
+    case ST::D_BOOLEAN:
+      stringToPrint = genre == Genre::MASC ? "booleano" : "booleana"; break;
+    default:
+      stringToPrint = genre == Genre::MASC ? "desconhecido" : "desconhecida"; break;
   }
-  std::cout << name;
+
+  std::cout << stringToPrint;
+}
+
+void Variable::printTree(){
+  printTypeVariable(this, Genre::FEM);
+  std::cout << " "+name;
   return;
 }

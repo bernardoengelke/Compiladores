@@ -4,5 +4,6 @@
 using namespace VAR;
 
 void Bool::printTree(){
-  std::cout<<value;
+  std::cout << "valor booleano ";
+  std::cout << (value?"TRUE":"FALSE");
 }
