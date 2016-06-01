@@ -42,7 +42,7 @@ extern void yyerror(const char* s, ...);
 %token T_OPENP T_CLOSEP
 %token T_OPENB T_CLOSEB
 
-%token IF THEN ELSE ENDIF WHILE DO
+%token IF THEN ELSE ENDIF WHILE DO ENDWHILE
 
 
 %type <node> expr line variables  
@@ -75,6 +75,7 @@ line    : T_EOFL { $$ = NULL; }/*nothing here to be used */
         | D_REAL T_ASSIGN_TYPE variables T_EOFL { VAR::Node *root = symtab.updateTypeVariable(ST::D_REAL, $3); $$ = new VAR::Definition(root); }
         | D_BOOL T_ASSIGN_TYPE variables T_EOFL { VAR::Node *root = symtab.updateTypeVariable(ST::D_BOOLEAN, $3); $$ = new VAR::Definition(root); }
         | D_INT T_OPENB T_INT T_CLOSEB T_ASSIGN_TYPE variables T_EOFL{ VAR::Node *root = symtab.updateTypeVariable(ST::D_INTEGER, $6); $$ = new VAR::Definition(root); }
+        | D_REAL T_OPENB T_INT T_CLOSEB T_ASSIGN_TYPE variables T_EOFL{ VAR::Node *root = symtab.updateTypeVariable(ST::D_INTEGER, $6); $$ = new VAR::Definition(root); }
         | T_VAR T_ASSIGN expr { VAR::Node* node = symtab.assignVariable($1); $$ = new VAR::BinOp(node,VAR::T_ASSIGN, $3);}
         | T_VAR T_OPENB T_INT T_CLOSEB T_ASSIGN expr { VAR::Node* node = symtab.assignVariable($1); $$ = new VAR::BinOp(node,VAR::T_ASSIGN, $6);}
         | T_VAR T_OPENB T_INT T_SUB T_INT T_CLOSEB T_ASSIGN expr { VAR::Node* node = symtab.assignVariable($1); $$ = new VAR::BinOp(node,VAR::T_ASSIGN, $8);}
@@ -87,6 +88,7 @@ line    : T_EOFL { $$ = NULL; }/*nothing here to be used */
         | T_VAR T_OPENB T_VAR T_PLUS T_VAR T_CLOSEB T_ASSIGN expr { VAR::Node* node = symtab.assignVariable($1); $$ = new VAR::BinOp(node,VAR::T_ASSIGN, $8);}
         | T_VAR T_OPENB T_VAR T_DIV T_VAR T_CLOSEB T_ASSIGN expr { VAR::Node* node = symtab.assignVariable($1); $$ = new VAR::BinOp(node,VAR::T_ASSIGN, $8);}
         | IF expr THEN line T_EOFL ELSE line T_EOFL ENDIF { $$ = new VAR::Block(); }
+        | WHILE expr DO line T_EOFL line T_EOFL ENDWHILE { $$ = new VAR::Block(); }
         ;
 
 variables : T_VAR { $$ = symtab.newVariable($1, NULL); }

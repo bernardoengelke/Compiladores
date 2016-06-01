@@ -67,6 +67,7 @@ _real "."{_digs}|{_digs}"."|{_digs}"."{_digs}
 "while" 			{return WHILE;}
 "do"    			{return DO;}
 "end if"    		{return ENDIF;}
+"end while"			{return ENDWHILE;}
 
  /*valores*/
 {_var}              {yylval.string = strdup(yytext); return T_VAR;}
