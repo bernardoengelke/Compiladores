@@ -21,12 +21,7 @@ _real "."{_digs}|{_digs}"."|{_digs}"."{_digs}
  /*definições*/
 "int"               {return D_INT;}
 "real"              {return D_REAL;}
-"bool"              {return D_BOOL;}
-
- /*valores*/
-{_var}              {yylval.string = strdup(yytext); return T_VAR;}
-{_int}              {yylval.integer = std::atoi(yytext); return T_INT;}
-{_real}             {yylval.real = std::atof(yytext); return T_REAL;}
+"bool"              {return D_BOOL;} 
 
  /*valores booleanos*/
 "TRUE"              {yylval.boolean = true; return T_TRUE;}
@@ -60,6 +55,23 @@ _real "."{_digs}|{_digs}"."|{_digs}"."{_digs}
  /*parenteses*/
 "("                 {return T_OPENP;}
 ")"                 {return T_CLOSEP;}
+
+ /*arranjos*/
+"["					{return T_OPENB;}
+"]"					{return T_CLOSEB;}
+
+ /*condições e laços*/
+"if"    			{return IF;}
+"then"  			{return THEN;}
+"else"  			{return ELSE;}
+"while" 			{return WHILE;}
+"do"    			{return DO;}
+"end if"    		{return ENDIF;}
+
+ /*valores*/
+{_var}              {yylval.string = strdup(yytext); return T_VAR;}
+{_int}              {yylval.integer = std::atoi(yytext); return T_INT;}
+{_real}             {yylval.real = std::atof(yytext); return T_REAL;}
 
 .                   {yyerror("Unknown token! %c\n", *yytext);} /*complains about every unknown character*/
 
