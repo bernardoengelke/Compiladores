@@ -40,9 +40,12 @@ extern void yyerror(const char* s, ...);
 
 %token T_AND T_OR T_NOT
 %token T_OPENP T_CLOSEP
+%token T_OPENB T_CLOSEB
+
+%token IF THEN ELSE ENDIF WHILE DO
 
 
-%type <node> expr line variables
+%type <node> expr line variables  
 %type <block> lines program
 
 /* Operator precedence for mathematical operators
@@ -71,9 +74,20 @@ line    : T_EOFL { $$ = NULL; }/*nothing here to be used */
         | D_INT T_ASSIGN_TYPE variables T_EOFL { VAR::Node *root = symtab.updateTypeVariable(ST::D_INTEGER, $3); $$ = new VAR::Definition(root); }
         | D_REAL T_ASSIGN_TYPE variables T_EOFL { VAR::Node *root = symtab.updateTypeVariable(ST::D_REAL, $3); $$ = new VAR::Definition(root); }
         | D_BOOL T_ASSIGN_TYPE variables T_EOFL { VAR::Node *root = symtab.updateTypeVariable(ST::D_BOOLEAN, $3); $$ = new VAR::Definition(root); }
+        | D_INT T_OPENB T_INT T_CLOSEB T_ASSIGN_TYPE variables T_EOFL{ VAR::Node *root = symtab.updateTypeVariable(ST::D_INTEGER, $6); $$ = new VAR::Definition(root); }
         | T_VAR T_ASSIGN expr { VAR::Node* node = symtab.assignVariable($1); $$ = new VAR::BinOp(node,VAR::T_ASSIGN, $3);}
+        | T_VAR T_OPENB T_INT T_CLOSEB T_ASSIGN expr { VAR::Node* node = symtab.assignVariable($1); $$ = new VAR::BinOp(node,VAR::T_ASSIGN, $6);}
+        | T_VAR T_OPENB T_INT T_SUB T_INT T_CLOSEB T_ASSIGN expr { VAR::Node* node = symtab.assignVariable($1); $$ = new VAR::BinOp(node,VAR::T_ASSIGN, $8);}
+        | T_VAR T_OPENB T_INT T_MULT T_INT T_CLOSEB T_ASSIGN expr { VAR::Node* node = symtab.assignVariable($1); $$ = new VAR::BinOp(node,VAR::T_ASSIGN, $8);}
+        | T_VAR T_OPENB T_INT T_PLUS T_INT T_CLOSEB T_ASSIGN expr { VAR::Node* node = symtab.assignVariable($1); $$ = new VAR::BinOp(node,VAR::T_ASSIGN, $8);}
+        | T_VAR T_OPENB T_INT T_DIV T_INT T_CLOSEB T_ASSIGN expr { VAR::Node* node = symtab.assignVariable($1); $$ = new VAR::BinOp(node,VAR::T_ASSIGN, $8);}
+        | T_VAR T_OPENB T_VAR T_CLOSEB T_ASSIGN expr { VAR::Node* node = symtab.assignVariable($1); $$ = new VAR::BinOp(node,VAR::T_ASSIGN, $6);}
+        | T_VAR T_OPENB T_VAR T_SUB T_VAR T_CLOSEB T_ASSIGN expr { VAR::Node* node = symtab.assignVariable($1); $$ = new VAR::BinOp(node,VAR::T_ASSIGN, $8);}
+        | T_VAR T_OPENB T_VAR T_MULT T_VAR T_CLOSEB T_ASSIGN expr { VAR::Node* node = symtab.assignVariable($1); $$ = new VAR::BinOp(node,VAR::T_ASSIGN, $8);}
+        | T_VAR T_OPENB T_VAR T_PLUS T_VAR T_CLOSEB T_ASSIGN expr { VAR::Node* node = symtab.assignVariable($1); $$ = new VAR::BinOp(node,VAR::T_ASSIGN, $8);}
+        | T_VAR T_OPENB T_VAR T_DIV T_VAR T_CLOSEB T_ASSIGN expr { VAR::Node* node = symtab.assignVariable($1); $$ = new VAR::BinOp(node,VAR::T_ASSIGN, $8);}
+        | IF expr THEN line T_EOFL ELSE line T_EOFL ENDIF { $$ = new VAR::Block(); }
         ;
-
 
 variables : T_VAR { $$ = symtab.newVariable($1, NULL); }
           | variables T_COMMA T_VAR { $$ = symtab.newVariable($3, $1); }
