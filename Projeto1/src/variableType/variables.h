@@ -39,6 +39,7 @@ namespace VAR {
     public:
       virtual ~Node() {}
       virtual void printTree(){}
+      virtual void printType(Genre genre){}
   };
 
   class Integer : public Node {
@@ -46,6 +47,7 @@ namespace VAR {
       int value;
       Integer(int value) : value(value) {}
       void printTree();
+      void printType(Genre genre);
   };
 
   class Real : public Node {
@@ -53,6 +55,7 @@ namespace VAR {
       float value;
       Real(float value) : value(value) {}
       void printTree();
+      void printType(Genre genre);
   };
 
   class Bool : public Node {
@@ -60,6 +63,7 @@ namespace VAR {
       bool value;
       Bool(bool value) : value(value) {}
       void printTree();
+      void printType(Genre genre);
   };
 
   class Variable : public Node {
@@ -68,6 +72,7 @@ namespace VAR {
       Node *next;
       Variable(std::string name, Node *node) : name(name), next(node) {}
       void printTree();
+      void printType(Genre genre);
       static void printTypeVariable(Node* node, Genre genre);
   };
 
@@ -86,6 +91,7 @@ namespace VAR {
       Node *right;
       BinOp(Node *left, Operation op, Node *right) : left(left), right(right), op(op) {}
       void printTree();
+      void printType(Genre genre);
   };
 
   class Block : public Node {

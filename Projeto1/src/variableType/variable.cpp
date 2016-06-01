@@ -6,7 +6,6 @@ using namespace VAR;
 extern ST::SymbolTable symtab;
 
 void Variable::printTypeVariable(Node* node, Genre genre){
-  std::cout << "variável ";
   Variable* varNode = dynamic_cast<Variable*>(node);
   std::string stringToPrint;
 
@@ -24,7 +23,12 @@ void Variable::printTypeVariable(Node* node, Genre genre){
   std::cout << stringToPrint;
 }
 
+void Variable::printType(Genre genre){
+  Variable::printTypeVariable(this, genre);
+}
+
 void Variable::printTree(){
+  std::cout << "variavel ";
   printTypeVariable(this, Genre::FEM);
   std::cout << " "+name;
   return;
